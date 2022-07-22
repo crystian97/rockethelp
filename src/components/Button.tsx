@@ -12,7 +12,7 @@ export function Button({ title, ...rest }: ButtonType) {
       _pressed={{ bg: "green.500" }}
       {...rest}
     >
-      <Heading>{title}</Heading>
+      <Heading color="gray.100">{title}</Heading>
     </ButtonNativeBase>
   );
 }

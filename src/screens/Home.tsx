@@ -7,26 +7,22 @@ import {
   useTheme,
   VStack,
   FlatList,
+  Center,
 } from "native-base";
 import colors from "native-base/lib/typescript/theme/base/colors";
-import { SignOut } from "phosphor-react-native";
+import { ChatTeardropText, SignOut } from "phosphor-react-native";
 import Logo from "../assets/logo_secondary.svg";
 import { Filter } from "../components/Filter";
 import { Order, OrderProps } from "../components/Order";
+import { Button } from "../components/Button";
+import { color } from "native-base/lib/typescript/theme/styled-system";
 
 export function Home() {
   const { colors } = useTheme();
   const [statusSelected, setStatusSelected] = useState<"open" | "closed">(
     "open"
   );
-  const [orders, setOrders] = useState<OrderProps[]>([
-    {
-      id: "123",
-      patrimony: "123456",
-      when: "18/07/2022 às 10:00",
-      status: "open",
-    },
-  ]);
+  const [orders, setOrders] = useState<OrderProps[]>([]);
   return (
     <VStack flex={1} pb={6} bg="gray.700">
       <HStack
@@ -71,7 +67,20 @@ export function Home() {
           data={orders}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <Order data={item} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 100 }}
+          ListEmptyComponent={() => (
+            <Center>
+              <ChatTeardropText color={colors.gray[300]} size={40} />
+              <Text color="gray.300" fontSize="xl" mt={6} textAlign="center">
+                Você ainda não possui {"\n"}
+                solicitações{" "}
+                {statusSelected === "open" ? "em aberto" : "finalizadas"}{" "}
+              </Text>
+            </Center>
+          )}
         />
+        <Button title="nova solicitação" />
       </VStack>
     </VStack>
   );
