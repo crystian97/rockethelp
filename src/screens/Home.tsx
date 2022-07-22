@@ -16,13 +16,25 @@ import { Filter } from "../components/Filter";
 import { Order, OrderProps } from "../components/Order";
 import { Button } from "../components/Button";
 import { color } from "native-base/lib/typescript/theme/styled-system";
+import { useNavigation } from "@react-navigation/native";
 
 export function Home() {
   const { colors } = useTheme();
+  const navigation = useNavigation();
   const [statusSelected, setStatusSelected] = useState<"open" | "closed">(
     "open"
   );
-  const [orders, setOrders] = useState<OrderProps[]>([]);
+  const [orders, setOrders] = useState<OrderProps[]>([
+    {
+      id: "123456",
+      patrimony: "123456789",
+      when: "22/07/2022",
+      status: "open",
+    },
+  ]);
+  function handleNewOrder() {
+    navigation.navigate("new");
+  }
   return (
     <VStack flex={1} pb={6} bg="gray.700">
       <HStack
@@ -80,7 +92,7 @@ export function Home() {
             </Center>
           )}
         />
-        <Button title="nova solicitação" />
+        <Button title="nova solicitação" onPress={handleNewOrder} />
       </VStack>
     </VStack>
   );
